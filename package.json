@@ -1,0 +1,32 @@
+{
+  "name": "hacesfalta-mcp",
+  "version": "1.0.0",
+  "description": "MCP Server para orientación conversacional de voluntariado en Hacesfalta.org",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "start:http": "TRANSPORT=http node dist/index.js",
+    "dev": "tsc && node dist/index.js",
+    "dev:http": "tsc && TRANSPORT=http node dist/index.js",
+    "deploy": "wrangler deploy"
+  },
+  "keywords": [
+    "mcp",
+    "voluntariado",
+    "hacesfalta"
+  ],
+  "author": "Hacesfalta.org",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "agents": "^0.15.0",
+    "dotenv": "^17.4.2",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.2",
+    "typescript": "^6.0.3"
+  }
+}
