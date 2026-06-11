@@ -1,0 +1,44 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.HazloPosible/hacesfalta-mcp",
+  "description": "Search volunteer opportunities across Spain via hacesfalta.org",
+  "repository": {
+    "url": "https://github.com/HazloPosible/hacesfalta-mcp",
+    "source": "github"
+  },
+  "version": "1.0.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@hacesfalta/mcp-server",
+      "version": "1.0.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "description": "Base URL of the HaceFalta API",
+          "isRequired": true,
+          "format": "string",
+          "isSecret": false,
+          "name": "HACESFALTA_API_URL"
+        },
+        {
+          "description": "API key for authenticating with the HaceFalta API",
+          "isRequired": true,
+          "format": "string",
+          "isSecret": true,
+          "name": "HACESFALTA_API_KEY"
+        }
+      ]
+    }
+  ],
+  "remoteEndpoints": [
+    {
+      "url": "https://hacesfalta-mcp.hacesfalta.workers.dev/mcp",
+      "transport": {
+        "type": "streamable-http"
+      }
+    }
+  ]
+}

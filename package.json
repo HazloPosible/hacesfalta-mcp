@@ -1,24 +1,41 @@
 {
-  "name": "hacesfalta-mcp",
-  "version": "1.0.0",
-  "description": "MCP Server para orientación conversacional de voluntariado en Hacesfalta.org",
+  "name": "@hacesfalta/mcp-server",
+  "version": "1.0.1",
+  "description": "MCP Server for hacesfalta.org — search and discover volunteer opportunities across Spain",
   "main": "dist/index.js",
   "type": "module",
+  "bin": {
+    "hacesfalta-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
     "start:http": "TRANSPORT=http node dist/index.js",
     "dev": "tsc && node dist/index.js",
     "dev:http": "tsc && TRANSPORT=http node dist/index.js",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "mcp",
+    "model-context-protocol",
+    "volunteering",
     "voluntariado",
-    "hacesfalta"
+    "hacesfalta",
+    "spain"
   ],
   "author": "Hacesfalta.org",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HazloPosible/hacesfalta-mcp.git"
+  },
+  "homepage": "https://www.hacesfalta.org",
+  "mcpName": "io.github.HazloPosible/hacesfalta-mcp",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "agents": "^0.15.0",
