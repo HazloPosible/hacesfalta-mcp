@@ -39,6 +39,7 @@ function createServer(env: Env): McpServer {
     "buscar_oportunidades",
     "Busca oportunidades de voluntariado en España. Permite filtrar por provincia, categoría, frecuencia, horario, edad, y más. Devuelve un listado resumido con enlaces de inscripción.",
     buscarSchema.shape,
+    { title: "Search Volunteer Opportunities", readOnlyHint: true, destructiveHint: false, openWorldHint: false },
     async (params) => ({
       content: [{ type: "text", text: await buscarExecute(params) }],
     })
@@ -48,6 +49,7 @@ function createServer(env: Env): McpServer {
     "detalle_oportunidad",
     "Obtiene el detalle completo de una oportunidad de voluntariado: descripción, perfil buscado, fechas, horarios, competencias, ODS y enlace de inscripción.",
     detalleSchema.shape,
+    { title: "Get Opportunity Details", readOnlyHint: true, destructiveHint: false, openWorldHint: false },
     async (params) => ({
       content: [{ type: "text", text: await detalleExecute(params) }],
     })
@@ -56,6 +58,7 @@ function createServer(env: Env): McpServer {
   server.tool(
     "listar_categorias",
     "Lista todas las categorías de voluntariado disponibles (ej: Mayores, Infancia, Medio Ambiente) con el número de oportunidades en cada una.",
+    { title: "List Volunteer Categories", readOnlyHint: true, destructiveHint: false, openWorldHint: false },
     async () => ({
       content: [{ type: "text", text: await categoriasExecute() }],
     })
@@ -64,6 +67,7 @@ function createServer(env: Env): McpServer {
   server.tool(
     "listar_provincias",
     "Lista todas las provincias españolas con oportunidades de voluntariado y el número de oportunidades en cada una.",
+    { title: "List Spanish Provinces", readOnlyHint: true, destructiveHint: false, openWorldHint: false },
     async () => ({
       content: [{ type: "text", text: await provinciasExecute() }],
     })

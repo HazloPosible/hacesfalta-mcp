@@ -1,6 +1,6 @@
 {
   "name": "@hacesfalta/mcp-server",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MCP Server for hacesfalta.org — search and discover volunteer opportunities across Spain",
   "main": "dist/index.js",
   "type": "module",
