@@ -86,6 +86,12 @@ export default {
       });
     }
 
+    if (url.pathname === "/.well-known/openai-apps-challenge") {
+      return new Response("HetFE7DOXpsqNytnjBXivUQYSX-5aS8IUE0Tsv8IHXQ", {
+        headers: { "Content-Type": "text/plain" },
+      });
+    }
+
     const server = createServer(env);
     return createMcpHandler(server)(request, env, ctx);
   },
