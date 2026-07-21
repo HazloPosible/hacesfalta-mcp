@@ -10,6 +10,7 @@ declare global {
 
 import { createMcpHandler } from "agents/mcp";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { z } from "zod";
 import { initClient } from "./api/client.js";
 import {
   schema as buscarSchema,
@@ -35,42 +36,64 @@ function createServer(env: Env): McpServer {
     version: "1.0.0",
   });
 
-  server.tool(
+  const textOutputSchema = { result: z.string() };
+
+  server.registerTool(
     "buscar_oportunidades",
-    "Busca oportunidades de voluntariado en España. Permite filtrar por provincia, categoría, frecuencia, horario, edad, y más. Devuelve un listado resumido con enlaces de inscripción.",
-    buscarSchema.shape,
-    { title: "Search Volunteer Opportunities", readOnlyHint: true, destructiveHint: false, openWorldHint: false },
-    async (params) => ({
-      content: [{ type: "text", text: await buscarExecute(params) }],
-    })
+    {
+      title: "Search Volunteer Opportunities",
+      description: "Busca oportunidades de voluntariado en España. Permite filtrar por provincia, categoría, frecuencia, horario, edad, y más. Devuelve un listado resumido con enlaces de inscripción.",
+      inputSchema: buscarSchema.shape,
+      outputSchema: textOutputSchema,
+      annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
+    },
+    async (params) => {
+      const result = await buscarExecute(params);
+      return { structuredContent: { result }, content: [{ type: "text", text: result }] };
+    }
   );
 
-  server.tool(
+  server.registerTool(
     "detalle_oportunidad",
-    "Obtiene el detalle completo de una oportunidad de voluntariado: descripción, perfil buscado, fechas, horarios, competencias, ODS y enlace de inscripción.",
-    detalleSchema.shape,
-    { title: "Get Opportunity Details", readOnlyHint: true, destructiveHint: false, openWorldHint: false },
-    async (params) => ({
-      content: [{ type: "text", text: await detalleExecute(params) }],
-    })
+    {
+      title: "Get Opportunity Details",
+      description: "Obtiene el detalle completo de una oportunidad de voluntariado: descripción, perfil buscado, fechas, horarios, competencias, ODS y enlace de inscripción.",
+      inputSchema: detalleSchema.shape,
+      outputSchema: textOutputSchema,
+      annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
+    },
+    async (params) => {
+      const result = await detalleExecute(params);
+      return { structuredContent: { result }, content: [{ type: "text", text: result }] };
+    }
   );
 
-  server.tool(
+  server.registerTool(
     "listar_categorias",
-    "Lista todas las categorías de voluntariado disponibles (ej: Mayores, Infancia, Medio Ambiente) con el número de oportunidades en cada una.",
-    { title: "List Volunteer Categories", readOnlyHint: true, destructiveHint: false, openWorldHint: false },
-    async () => ({
-      content: [{ type: "text", text: await categoriasExecute() }],
-    })
+    {
+      title: "List Volunteer Categories",
+      description: "Lista todas las categorías de voluntariado disponibles (ej: Mayores, Infancia, Medio Ambiente) con el número de oportunidades en cada una.",
+      outputSchema: textOutputSchema,
+      annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
+    },
+    async () => {
+      const result = await categoriasExecute();
+      return { structuredContent: { result }, content: [{ type: "text", text: result }] };
+    }
   );
 
-  server.tool(
+  server.registerTool(
     "listar_provincias",
-    "Lista todas las provincias españolas con oportunidades de voluntariado y el número de oportunidades en cada una.",
-    { title: "List Spanish Provinces", readOnlyHint: true, destructiveHint: false, openWorldHint: false },
-    async () => ({
-      content: [{ type: "text", text: await provinciasExecute() }],
-    })
+    {
+      title: "List Spanish Provinces",
+      description: "Lista todas las provincias españolas con oportunidades de voluntariado y el número de oportunidades en cada una.",
+      outputSchema: textOutputSchema,
+      annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
+    },
+    async () => {
+      const result = await provinciasExecute();
+      return { structuredContent: { result }, content: [{ type: "text", text: result }] };
+    }
   );
 
   return server;
