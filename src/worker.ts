@@ -45,7 +45,7 @@ function createServer(env: Env): McpServer {
       description: "Busca oportunidades de voluntariado en España. Permite filtrar por provincia, categoría, frecuencia, horario, edad, y más. Devuelve un listado resumido con enlaces de inscripción.",
       inputSchema: buscarSchema.shape,
       outputSchema: textOutputSchema,
-      annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
+      annotations: { title: "Search Volunteer Opportunities", readOnlyHint: true, destructiveHint: false, openWorldHint: false },
     },
     async (params) => {
       const result = await buscarExecute(params);
@@ -60,7 +60,7 @@ function createServer(env: Env): McpServer {
       description: "Obtiene el detalle completo de una oportunidad de voluntariado: descripción, perfil buscado, fechas, horarios, competencias, ODS y enlace de inscripción.",
       inputSchema: detalleSchema.shape,
       outputSchema: textOutputSchema,
-      annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
+      annotations: { title: "Get Opportunity Details", readOnlyHint: true, destructiveHint: false, openWorldHint: false },
     },
     async (params) => {
       const result = await detalleExecute(params);
@@ -74,7 +74,7 @@ function createServer(env: Env): McpServer {
       title: "List Volunteer Categories",
       description: "Lista todas las categorías de voluntariado disponibles (ej: Mayores, Infancia, Medio Ambiente) con el número de oportunidades en cada una.",
       outputSchema: textOutputSchema,
-      annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
+      annotations: { title: "List Volunteer Categories", readOnlyHint: true, destructiveHint: false, openWorldHint: false },
     },
     async () => {
       const result = await categoriasExecute();
@@ -88,7 +88,7 @@ function createServer(env: Env): McpServer {
       title: "List Spanish Provinces",
       description: "Lista todas las provincias españolas con oportunidades de voluntariado y el número de oportunidades en cada una.",
       outputSchema: textOutputSchema,
-      annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
+      annotations: { title: "List Spanish Provinces", readOnlyHint: true, destructiveHint: false, openWorldHint: false },
     },
     async () => {
       const result = await provinciasExecute();
