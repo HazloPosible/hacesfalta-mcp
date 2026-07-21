@@ -1,0 +1,128 @@
+{
+  "$schema": "https://developers.openai.com/apps-sdk/schemas/chatgpt-app-submission.v1.json",
+  "schema_version": 1,
+  "app_info": {
+    "display_name": "Hacesfalta",
+    "subtitle": "Descubre voluntariado",
+    "description": "Descubre oportunidades de voluntariado en España. Explora categorías y provincias, aplica filtros de disponibilidad y consulta los detalles necesarios para elegir una oportunidad e inscribirte desde su página oficial en Hacesfalta.",
+    "category": "LIFESTYLE"
+  },
+  "tools": {
+    "buscar_oportunidades": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Solo consulta oportunidades y catálogos de filtros sin crear, actualizar ni eliminar datos.",
+        "open_world_justification": "No publica contenido ni modifica sistemas externos; únicamente devuelve resultados y enlaces públicos de inscripción.",
+        "destructive_justification": "No elimina, sobrescribe ni revoca datos o accesos, y no ejecuta acciones irreversibles."
+      }
+    },
+    "detalle_oportunidad": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Solo recupera y presenta los datos de una oportunidad existente sin modificarla.",
+        "open_world_justification": "No cambia ningún sistema externo y se limita a mostrar información y el enlace público de inscripción.",
+        "destructive_justification": "No elimina, sobrescribe ni realiza acciones irreversibles sobre oportunidades o usuarios."
+      }
+    },
+    "listar_categorias": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Solo recupera la lista de categorías disponibles y sus recuentos de oportunidades.",
+        "open_world_justification": "No publica ni modifica información en internet o en sistemas de terceros.",
+        "destructive_justification": "No elimina, sobrescribe ni altera categorías u otros datos."
+      }
+    },
+    "listar_provincias": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Solo recupera las provincias disponibles y sus recuentos de oportunidades.",
+        "open_world_justification": "No publica contenido ni cambia datos en sistemas externos.",
+        "destructive_justification": "No elimina, sobrescribe ni altera provincias u otros datos."
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "description": "Buscar voluntariado para una causa, lugar y disponibilidad concretos.",
+      "user_prompt": "Busca oportunidades de voluntariado con personas mayores en Madrid durante el fin de semana.",
+      "file_attachment_urls": null,
+      "tools_triggered": "buscar_oportunidades",
+      "expected_output": "Devuelve oportunidades que coinciden con los filtros, incluyendo ONG, ubicación, resumen y enlace de inscripción.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Consultar el detalle completo de una oportunidad seleccionada.",
+      "user_prompt": "Busca oportunidades de voluntariado con infancia en Madrid y muéstrame el detalle completo de la primera coincidencia.",
+      "file_attachment_urls": null,
+      "tools_triggered": "buscar_oportunidades, detalle_oportunidad",
+      "expected_output": "Devuelve los datos disponibles de la oportunidad, incluidos perfil, fechas, horarios, vacantes y enlace de inscripción.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Explorar las causas y colectivos disponibles antes de buscar.",
+      "user_prompt": "¿Qué categorías de voluntariado puedo consultar en HaceFalta?",
+      "file_attachment_urls": null,
+      "tools_triggered": "listar_categorias",
+      "expected_output": "Devuelve las categorías disponibles con el número de oportunidades de cada una.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Explorar las ubicaciones españolas con oportunidades.",
+      "user_prompt": "¿En qué provincias de España hay oportunidades de voluntariado?",
+      "file_attachment_urls": null,
+      "tools_triggered": "listar_provincias",
+      "expected_output": "Devuelve las provincias disponibles con el número de oportunidades de cada una.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Comprobar filtros familiares y paginación de resultados.",
+      "user_prompt": "Enséñame la página 2 de oportunidades de voluntariado en familia en Barcelona.",
+      "file_attachment_urls": null,
+      "tools_triggered": "buscar_oportunidades",
+      "expected_output": "Devuelve la segunda página de oportunidades que admiten voluntariado en familia en Barcelona, o indica claramente si no hay coincidencias.",
+      "expected_output_url": null
+    }
+  ],
+  "negative_test_cases": [
+    {
+      "description": "No activar la app para buscar empleo remunerado.",
+      "user_prompt": "Busca ofertas de empleo a jornada completa en Madrid.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "La app no debe invocarse porque solo permite buscar oportunidades de voluntariado.",
+      "expected_output_url": null
+    },
+    {
+      "description": "No activar la app para realizar una donación económica.",
+      "user_prompt": "Dona 50 euros a una ONG que trabaje con infancia.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "La app no debe invocarse porque no procesa pagos ni donaciones.",
+      "expected_output_url": null
+    },
+    {
+      "description": "No activar la app para inscribir al usuario automáticamente.",
+      "user_prompt": "Inscríbeme directamente en esta oportunidad de voluntariado.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "La app no debe invocarse para enviar una inscripción porque solo proporciona información y enlaces para que el usuario continúe en la web oficial.",
+      "expected_output_url": null
+    }
+  ]
+}
